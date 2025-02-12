@@ -1,5 +1,6 @@
 import './App.css';
 import freeCodeCampLogo from './images/freecodecamp-logo.svg';
+import Logo from './components/Logo';
 import Button from './components/Button';
 import Screen from './components/Screen';
 import ButtonClear from './components/ButtonClear';
@@ -11,7 +12,13 @@ function App() {
   const [inputState, setInputState] = useState('');
 
   const addInput = val => {
-    setInputState(inputState + val);
+    const newValue = inputState + val;
+    const pattern = /^\d+(?:[+\-*/]\d+)*$/;
+    const partialPattern = /^\d+(?:[+\-*/]\d+)*[+\-*/]?$/;
+    
+    if (pattern.test(newValue) || partialPattern.test(newValue)) {
+      setInputState(newValue);
+    }
   };
 
   const performOperation = () => {
@@ -30,9 +37,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className='freecodecamp-logo-container'>
-        <img src={freeCodeCampLogo} className='freecodecamp-logo' alt='FreeCodeCamp Logo' />
-      </div>
+      <Logo image={freeCodeCampLogo} />
       <div className='calc-container'>
         <Screen input={inputState} />
         <div className='row'>
